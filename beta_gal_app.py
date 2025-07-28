@@ -94,7 +94,7 @@ def main():
         initial_sidebar_state="collapsed"
     )
     
-    # Custom CSS for mobile optimization
+    # Custom CSS for mobile optimization and dark mode support
     st.markdown("""
     <style>
     .main .block-container {
@@ -104,12 +104,53 @@ def main():
         padding-right: 1rem;
         max-width: 100%;
     }
+    
+    /* Light mode styles */
+    [data-theme="light"] .stMetric,
     .stMetric {
         background-color: #f0f2f6;
         padding: 0.5rem;
         border-radius: 0.5rem;
         margin-bottom: 0.5rem;
+        border: 1px solid #e0e0e0;
     }
+    
+    /* Dark mode styles */
+    [data-theme="dark"] .stMetric {
+        background-color: #2b2b2b;
+        border: 1px solid #4a4a4a;
+        color: #ffffff;
+    }
+    
+    /* Dark mode metric values */
+    [data-theme="dark"] .stMetric [data-testid="metric-container"] {
+        background-color: #2b2b2b;
+    }
+    
+    /* Dark mode expander styling */
+    [data-theme="dark"] .streamlit-expander {
+        background-color: #1e1e1e;
+        border: 1px solid #4a4a4a;
+    }
+    
+    [data-theme="dark"] .streamlit-expander .streamlit-expanderHeader {
+        background-color: #2b2b2b;
+        color: #ffffff;
+    }
+    
+    [data-theme="dark"] .streamlit-expander .streamlit-expanderContent {
+        background-color: #1e1e1e;
+        color: #ffffff;
+    }
+    
+    /* Dark mode info box */
+    [data-theme="dark"] .stAlert > div {
+        background-color: #1a472a;
+        border-color: #2d5a3d;
+        color: #ffffff;
+    }
+    
+    /* Typography adjustments for both modes */
     h1 {
         font-size: 1.5rem !important;
         margin-bottom: 1rem !important;
@@ -123,11 +164,79 @@ def main():
         font-size: 1rem !important;
         margin-bottom: 0.5rem !important;
     }
-    .stSelectbox label {
-        font-size: 0.9rem !important;
-    }
+    
+    /* Input field labels */
+    .stSelectbox label,
     .stNumberInput label {
         font-size: 0.9rem !important;
+        font-weight: 600;
+    }
+    
+    /* Dark mode input fields */
+    [data-theme="dark"] .stSelectbox label,
+    [data-theme="dark"] .stNumberInput label {
+        color: #ffffff;
+    }
+    
+    /* Ensure text readability in dark mode */
+    [data-theme="dark"] .stMarkdown {
+        color: #ffffff;
+    }
+    
+    /* Dark mode text area (protocol) */
+    [data-theme="dark"] .stTextArea textarea {
+        background-color: #2b2b2b;
+        color: #ffffff;
+        border-color: #4a4a4a;
+    }
+    
+    /* Custom styling for metric containers in dark mode */
+    @media (prefers-color-scheme: dark) {
+        .stMetric {
+            background-color: #2b2b2b !important;
+            border: 1px solid #4a4a4a !important;
+            color: #ffffff !important;
+        }
+        
+        .stAlert > div {
+            background-color: #1a472a !important;
+            border-color: #2d5a3d !important;
+            color: #ffffff !important;
+        }
+        
+        .streamlit-expander {
+            background-color: #1e1e1e !important;
+            border: 1px solid #4a4a4a !important;
+        }
+        
+        .streamlit-expander .streamlit-expanderHeader {
+            background-color: #2b2b2b !important;
+            color: #ffffff !important;
+        }
+        
+        .streamlit-expander .streamlit-expanderContent {
+            background-color: #1e1e1e !important;
+            color: #ffffff !important;
+        }
+    }
+    
+    /* Enhanced contrast for better readability */
+    .metric-value {
+        font-weight: bold;
+        font-size: 1.1em;
+    }
+    
+    /* Mobile-specific dark mode adjustments */
+    @media (max-width: 768px) {
+        [data-theme="dark"] .main .block-container {
+            background-color: #0e1117;
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            .main .block-container {
+                background-color: #0e1117 !important;
+            }
+        }
     }
     </style>
     """, unsafe_allow_html=True)
@@ -164,8 +273,21 @@ def main():
     culture_name, culture_class = culture_options[selected_culture]
     assay = culture_class(num_units)
     
-    # Display plate information in a compact format
-    st.info(f"**{culture_name}** • {num_units} units • {assay.area} cm²/well • {assay.media_volume} ml media")
+    # Display plate information in a compact format with dark mode friendly styling
+    st.markdown(f"""
+    <div style="
+        padding: 0.75rem; 
+        border-radius: 0.5rem; 
+        background-color: var(--background-color, #d1ecf1);
+        border: 1px solid var(--border-color, #bee5eb);
+        color: var(--text-color, #0c5460);
+        margin: 1rem 0;
+        text-align: center;
+        font-weight: 500;
+    ">
+        <strong>{culture_name}</strong> • {num_units} units • {assay.area} cm²/well • {assay.media_volume} ml media
+    </div>
+    """, unsafe_allow_html=True)
     
     # Calculate solutions
     PBS = assay.get_PBS_preparation()
@@ -210,26 +332,34 @@ def main():
     with st.expander("**Step-by-step protocol**", expanded=False):
         st.text(protocol_text)
     
-    # Quick reference - compact summary
+    # Quick reference - compact summary with dark mode styling
     st.markdown("### 📊 Quick Reference")
     
-    # Create a more compact summary for mobile
+    # Create a more compact summary for mobile with dark mode support
     st.markdown(f"""
-    **PBS Total:** {PBS['10X_PBS'] + PBS['Water']:.3f} ml (for 3 rinses)
+    <div style="
+        background-color: var(--secondary-background-color, #f8f9fa);
+        padding: 1rem;
+        border-radius: 0.5rem;
+        border: 1px solid var(--border-color, #dee2e6);
+        margin: 0.5rem 0;
+    ">
+        <div style="margin-bottom: 0.5rem;"><strong>PBS Total:</strong> {PBS['10X_PBS'] + PBS['Water']:.3f} ml <em>(for 3 rinses)</em></div>
+        <div style="margin-bottom: 0.5rem;"><strong>Fixative Total:</strong> {fixative_sol['10X Fixative Solution'] + fixative_sol['Water']:.3f} ml</div>
+        <div><strong>Staining Total:</strong> {(beta_gal_sol['10X Staining Solution'] + beta_gal_sol['Water'] + beta_gal_sol['100X Solution A'] + beta_gal_sol['100X Solution B'] + beta_gal_sol['DMSO'])*1000:.0f} μl</div>
+    </div>
+    """, unsafe_allow_html=True)
     
-    **Fixative Total:** {fixative_sol['10X Fixative Solution'] + fixative_sol['Water']:.3f} ml
-    
-    **Staining Total:** {(beta_gal_sol['10X Staining Solution'] + beta_gal_sol['Water'] + beta_gal_sol['100X Solution A'] + beta_gal_sol['100X Solution B'] + beta_gal_sol['DMSO'])*1000:.0f} μl
-    """)
-    
-    # Important notes in a collapsible section
+    # Important notes in a collapsible section with dark mode styling
     with st.expander("⚠️ **Important Notes**"):
         st.markdown("""
-        • Prepare X-gal stock by dissolving powder in DMSO
-        • Keep staining solution protected from light
-        • Use room temperature solutions
-        • Incubation time may vary with expression level
-        """)
+        <div style="line-height: 1.6;">
+            <div style="margin-bottom: 0.5rem;">• Prepare X-gal stock by dissolving powder in DMSO</div>
+            <div style="margin-bottom: 0.5rem;">• Keep staining solution protected from light</div>
+            <div style="margin-bottom: 0.5rem;">• Use room temperature solutions</div>
+            <div>• Incubation time may vary with expression level</div>
+        </div>
+        """, unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main()
