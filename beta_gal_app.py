@@ -220,10 +220,29 @@ def main():
         }
     }
     
-    /* Enhanced contrast for better readability */
-    .metric-value {
-        font-weight: bold;
-        font-size: 1.1em;
+    /* Quick reference box styling for both light and dark modes */
+    .quick-ref-box {
+        padding: 1rem;
+        border-radius: 0.5rem;
+        margin: 0.5rem 0;
+        background-color: #f8f9fa;
+        border: 1px solid #dee2e6;
+        color: #212529;
+    }
+    
+    /* Dark mode quick reference box */
+    [data-theme="dark"] .quick-ref-box {
+        background-color: #2b2b2b;
+        border: 1px solid #4a4a4a;
+        color: #ffffff;
+    }
+    
+    @media (prefers-color-scheme: dark) {
+        .quick-ref-box {
+            background-color: #2b2b2b !important;
+            border: 1px solid #4a4a4a !important;
+            color: #ffffff !important;
+        }
     }
     
     /* Mobile-specific dark mode adjustments */
@@ -335,31 +354,15 @@ def main():
     # Quick reference - compact summary with dark mode styling
     st.markdown("### 📊 Quick Reference")
     
-    # Create a more compact summary for mobile with dark mode support
+    # Create a more compact summary for mobile with proper dark mode support
     st.markdown(f"""
-    <div style="
-        background-color: var(--secondary-background-color, #f8f9fa);
-        padding: 1rem;
-        border-radius: 0.5rem;
-        border: 1px solid var(--border-color, #dee2e6);
-        margin: 0.5rem 0;
-    ">
+    <div class="quick-ref-box">
         <div style="margin-bottom: 0.5rem;"><strong>PBS Total:</strong> {PBS['10X_PBS'] + PBS['Water']:.3f} ml <em>(for 3 rinses)</em></div>
         <div style="margin-bottom: 0.5rem;"><strong>Fixative Total:</strong> {fixative_sol['10X Fixative Solution'] + fixative_sol['Water']:.3f} ml</div>
         <div><strong>Staining Total:</strong> {(beta_gal_sol['10X Staining Solution'] + beta_gal_sol['Water'] + beta_gal_sol['100X Solution A'] + beta_gal_sol['100X Solution B'] + beta_gal_sol['DMSO'])*1000:.0f} μl</div>
     </div>
     """, unsafe_allow_html=True)
-    
-    # Important notes in a collapsible section with dark mode styling
-    with st.expander("⚠️ **Important Notes**"):
-        st.markdown("""
-        <div style="line-height: 1.6;">
-            <div style="margin-bottom: 0.5rem;">• Prepare X-gal stock by dissolving powder in DMSO</div>
-            <div style="margin-bottom: 0.5rem;">• Keep staining solution protected from light</div>
-            <div style="margin-bottom: 0.5rem;">• Use room temperature solutions</div>
-            <div>• Incubation time may vary with expression level</div>
-        </div>
-        """, unsafe_allow_html=True)
+
 
 if __name__ == "__main__":
     main()
