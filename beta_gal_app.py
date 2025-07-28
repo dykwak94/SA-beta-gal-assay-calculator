@@ -388,7 +388,7 @@ def main():
     # Attribution section
     st.markdown("""
     <div class="attribution">
-        Created by davis_k
+        Created by davis_K
     </div>
     """, unsafe_allow_html=True)
 
