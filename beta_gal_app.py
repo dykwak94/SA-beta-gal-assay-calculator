@@ -381,7 +381,7 @@ def main():
     <div class="quick-ref-box">
         <div style="margin-bottom: 0.5rem;"><strong>PBS Total:</strong> {PBS['10X_PBS'] + PBS['Water']:.3f} ml <em>(for 3 rinses)</em></div>
         <div style="margin-bottom: 0.5rem;"><strong>Fixative Total:</strong> {fixative_sol['10X Fixative Solution'] + fixative_sol['Water']:.3f} ml</div>
-        <div><strong>Staining Total:</strong> {(beta_gal_sol['10X Staining Solution'] + beta_gal_sol['Water'] + beta_gal_sol['100X Solution A'] + beta_gal_sol['100X Solution B'] + beta_gal_sol['DMSO']):.3f} μl</div>
+        <div><strong>Staining Total:</strong> {(beta_gal_sol['10X Staining Solution'] + beta_gal_sol['Water'] + beta_gal_sol['100X Solution A'] + beta_gal_sol['100X Solution B'] + beta_gal_sol['DMSO']):.3f} ml</div>
     </div>
     """, unsafe_allow_html=True)
     
