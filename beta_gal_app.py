@@ -88,7 +88,7 @@ class hundred_pi_dish(beta_gal_assay):
 # Streamlit App
 def main():
     st.set_page_config(
-        page_title="β-Gal Assay Calc",
+        page_title="SA-β-Gal Assay Calc",
         page_icon="🧪",
         layout="centered",
         initial_sidebar_state="collapsed"
@@ -260,7 +260,7 @@ def main():
     </style>
     """, unsafe_allow_html=True)
     
-    st.title("🧪 β-Gal Assay Calculator")
+    st.title("🧪 SA-β-Gal Assay Calculator")
     
     # Input section at the top
     st.markdown("### Configuration")
