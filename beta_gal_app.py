@@ -88,7 +88,7 @@ class hundred_pi_dish(beta_gal_assay):
 # Streamlit App
 def main():
     st.set_page_config(
-        page_title="SA-β-Gal Assay Calc",
+        page_title="β-Gal Assay Calc",
         page_icon="🧪",
         layout="centered",
         initial_sidebar_state="collapsed"
@@ -257,6 +257,28 @@ def main():
             }
         }
     }
+    
+    /* Attribution styling */
+    .attribution {
+        text-align: center;
+        padding: 2rem 0 1rem 0;
+        margin-top: 2rem;
+        border-top: 1px solid #dee2e6;
+        color: #6c757d;
+        font-size: 0.9rem;
+    }
+    
+    [data-theme="dark"] .attribution {
+        border-top: 1px solid #4a4a4a;
+        color: #adb5bd;
+    }
+    
+    @media (prefers-color-scheme: dark) {
+        .attribution {
+            border-top: 1px solid #4a4a4a !important;
+            color: #adb5bd !important;
+        }
+    }
     </style>
     """, unsafe_allow_html=True)
     
@@ -360,6 +382,13 @@ def main():
         <div style="margin-bottom: 0.5rem;"><strong>PBS Total:</strong> {PBS['10X_PBS'] + PBS['Water']:.3f} ml <em>(for 3 rinses)</em></div>
         <div style="margin-bottom: 0.5rem;"><strong>Fixative Total:</strong> {fixative_sol['10X Fixative Solution'] + fixative_sol['Water']:.3f} ml</div>
         <div><strong>Staining Total:</strong> {(beta_gal_sol['10X Staining Solution'] + beta_gal_sol['Water'] + beta_gal_sol['100X Solution A'] + beta_gal_sol['100X Solution B'] + beta_gal_sol['DMSO'])*1000:.0f} μl</div>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Attribution section
+    st.markdown("""
+    <div class="attribution">
+        Created by davis_k
     </div>
     """, unsafe_allow_html=True)
 
